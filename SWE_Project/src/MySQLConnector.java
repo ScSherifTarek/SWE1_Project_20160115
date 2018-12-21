@@ -64,7 +64,7 @@ public class MySQLConnector {
 			stmt.executeUpdate(q);  
 			return true;
 		}
-		catch(Exception e)
+		catch(Exception ex)
 		{
 			return false;
 		}  
@@ -88,7 +88,6 @@ public class MySQLConnector {
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
 			return null;
 		}  
 	}
