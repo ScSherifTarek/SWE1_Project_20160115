@@ -76,6 +76,13 @@ CREATE TABLE `QuestionsForForms` (
 	PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `formsinposts` (
+	`id` int NOT NULL AUTO_INCREMENT,
+	`formID` int NOT NULL,
+	`postID` int NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
 ALTER TABLE `AnswerMessages` ADD CONSTRAINT `AnswerMessages_fk0` FOREIGN KEY (`senderID`) REFERENCES `Accounts`(`id`);
 
 ALTER TABLE `AnswerMessages` ADD CONSTRAINT `AnswerMessages_fk1` FOREIGN KEY (`receiverID`) REFERENCES `Accounts`(`id`);
@@ -107,4 +114,8 @@ ALTER TABLE `QuestionsForItems` ADD CONSTRAINT `QuestionsForItems_fk1` FOREIGN K
 ALTER TABLE `QuestionsForForms` ADD CONSTRAINT `QuestionsForForms_fk0` FOREIGN KEY (`questionID`) REFERENCES `QuestionAndAnswers`(`id`);
 
 ALTER TABLE `QuestionsForForms` ADD CONSTRAINT `QuestionsForForms_fk1` FOREIGN KEY (`formID`) REFERENCES `Forms`(`id`);
+
+ALTER TABLE `formsinposts` ADD CONSTRAINT `formsinposts_fk0` FOREIGN KEY (`formID`) REFERENCES `Forms`(`id`);
+
+ALTER TABLE `formsinposts` ADD CONSTRAINT `formsinposts_fk1` FOREIGN KEY (`postID`) REFERENCES `Posts`(`id`);
 

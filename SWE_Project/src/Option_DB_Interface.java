@@ -4,12 +4,12 @@ import java.util.ArrayList;
 public class Option_DB_Interface {
 	private static String tableName= "options";
 	
-	public static int addOption(int questionID,String option)
+	public static int addOption(Option option)
 	{
 		MySQLConnector.openConnection();
 		String q = "insert into "+tableName
 				+"(questionID, option) values"
-				+ "("+questionID+", '"+ option+"' )";
+				+ "("+option.getForQuestion().getId()+", '"+ option.getOption()+"' )";
 		Boolean result = MySQLConnector.executeUpdate(q);
 		
 		//load the id
@@ -30,7 +30,7 @@ public class Option_DB_Interface {
 		return result;
 	}
 	
-	public static ArrayList<String> getOptionsFor(int questionID)
+	public static ArrayList<Option> getOptionsFor(int questionID)
 	{
 		MySQLConnector.openConnection();
 		String q = "select * from "+tableName +" where "
@@ -45,11 +45,11 @@ public class Option_DB_Interface {
 		{
 			try
 			{
-				ArrayList<String> options= new ArrayList<>();
-				String option = null;
+				ArrayList<Option> options= new ArrayList<>();
+				Option option = null;
 				while(rs.next())  
 				{
-					option = rs.getString("option");
+					option = new Option(rs.getInt("id"), rs.getString("option"));
 					options.add(option);
 				}
 				MySQLConnector.closeConnection();
