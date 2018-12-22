@@ -1,5 +1,10 @@
-/MainForTests.class
-/MySQLConnector.class
-/Account_DB_Interface.class
-/Account$Account_DB_Interface.class
-/Account.class
+/Item.class
+/Item_DB_Interface.class
+/Form.class
+/Post.class
+/Question_Answers.class
+/Message.class
+/Answer_Message.class
+/Contact_Message.class
+/Post_DB_Interface.class
+/testMain.class
