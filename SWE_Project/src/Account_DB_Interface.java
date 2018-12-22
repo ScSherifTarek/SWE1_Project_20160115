@@ -33,6 +33,15 @@ public class Account_DB_Interface {
 		return result;
 	}
 	
+	public static Boolean deleteAccount(int id)
+	{
+		MySQLConnector.openConnection();
+		String q = "delete from "+ tableName +" where "
+				+ "id = "+id;
+		Boolean result = MySQLConnector.executeUpdate(q);
+		MySQLConnector.closeConnection();
+		return result;
+	}
 	
 	public static ArrayList<Account> getAllAccounts()
 	{

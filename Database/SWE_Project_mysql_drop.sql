@@ -16,11 +16,9 @@ ALTER TABLE `Posts` DROP FOREIGN KEY `Posts_fk1`;
 
 ALTER TABLE `Posts` DROP FOREIGN KEY `Posts_fk2`;
 
-ALTER TABLE `FormsInPosts` DROP FOREIGN KEY `FormsInPosts_fk0`;
-
-ALTER TABLE `FormsInPosts` DROP FOREIGN KEY `FormsInPosts_fk1`;
-
 ALTER TABLE `Forms` DROP FOREIGN KEY `Forms_fk0`;
+
+ALTER TABLE `Forms` DROP FOREIGN KEY `Forms_fk1`;
 
 ALTER TABLE `Options` DROP FOREIGN KEY `Options_fk0`;
 
@@ -41,8 +39,6 @@ DROP TABLE IF EXISTS `Items`;
 DROP TABLE IF EXISTS `ContactMessages`;
 
 DROP TABLE IF EXISTS `Posts`;
-
-DROP TABLE IF EXISTS `FormsInPosts`;
 
 DROP TABLE IF EXISTS `Forms`;
 
