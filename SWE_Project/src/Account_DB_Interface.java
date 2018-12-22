@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Account_DB_Interface {
 	private static String tableName="accounts";
 	
-	public static  int addAccount(Account acc)
+	public static int addAccount(Account acc)
 	{
 		MySQLConnector.openConnection();
 		String q = "insert into "+tableName+"(name, password, email, phone) values ('"
