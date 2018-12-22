@@ -6,6 +6,7 @@ public class Question_Answers {
 	private String answer;
 	private ArrayList<String> options;
 	private Form myForm;
+	private ArrayList<Item> itemsUsesMe;
 	
 	public Question_Answers(){}
 	public Question_Answers(Question_Answers q)
@@ -126,6 +127,34 @@ public class Question_Answers {
 	 */
 	public void setMyForm(Form myForm) {
 		this.myForm = new Form(myForm);
+	}
+	/**
+	 * @return the itemsUsesMe
+	 */
+	public ArrayList<Item> getItemsUsesMe() {
+		return itemsUsesMe;
+	}
+	/**
+	 * @param itemsUsesMe the itemsUsesMe to set
+	 */
+	public void setItemsUsesMe(ArrayList<Item> itemsUsesMe) {
+		if(itemsUsesMe == null)
+			return;
+		this.itemsUsesMe = new ArrayList<>();
+		for(Item e : itemsUsesMe)
+			this.itemsUsesMe.add(e);
+	}
+	/**
+	 * 
+	 * @param item the item to add
+	 */
+	public void addQuestionToQuestionsForThisItem(Item item)
+	{
+		if(item == null)
+			return;
+		if(this.itemsUsesMe == null)
+			this.itemsUsesMe = new ArrayList<>();
+		this.itemsUsesMe.add(item);
 	}
 	/**
 	 * 

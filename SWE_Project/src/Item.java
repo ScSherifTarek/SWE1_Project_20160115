@@ -6,6 +6,7 @@ public class Item {
 	private String type;
 	private String brand;
 	private ArrayList<Post> postsForMe;
+	private ArrayList<Question_Answers> questionsForThisItem;
 	
 	public Item(){}
 	public Item(Item item)
@@ -107,6 +108,35 @@ public class Item {
 			this.postsForMe = new ArrayList<>();
 		this.postsForMe.add(post);
 	}
+	
+	/**
+	 * @return the questionsForThisItem
+	 */
+	public ArrayList<Question_Answers> getQuestionsForThisItem() {
+		return questionsForThisItem;
+	}
+	/**
+	 * @param questionsForThisItem the questionsForThisItem to set
+	 */
+	public void setQuestionsForThisItem(ArrayList<Question_Answers> questionsForThisItem) {
+		if(questionsForThisItem == null)
+			return;
+		this.questionsForThisItem = new ArrayList<>();
+		for(Question_Answers e : questionsForThisItem)
+			this.questionsForThisItem.add(e);
+	}
+	/**
+	 * 
+	 * @param q the question to add
+	 */
+	public void addQuestionToQuestionsForThisItem(Question_Answers q)
+	{
+		if(q == null)
+			return;
+		if(this.questionsForThisItem == null)
+			this.questionsForThisItem = new ArrayList<>();
+		this.questionsForThisItem.add(q);
+	}
 	public String toString()
 	{
 		String result="\n";
@@ -127,4 +157,5 @@ public class Item {
 		}
 		return result;
 	}
+	
 }

@@ -1,6 +1,9 @@
 
 public class Post_DB_Interface {
 	private static String dateFormat = "YYYY-MM-dd HH:mm:ss";
+	private static String tableName="posts";
+	
+
 
 	/**
 	 * @return the dateFormat

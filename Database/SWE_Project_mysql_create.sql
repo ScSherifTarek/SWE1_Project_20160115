@@ -41,16 +41,10 @@ CREATE TABLE `Posts` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `FormsInPosts` (
-	`id` int NOT NULL AUTO_INCREMENT,
-	`formID` int NOT NULL,
-	`postID` int NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
 CREATE TABLE `Forms` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`formWriterID` int NOT NULL,
+	`postSubmittedIn` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -96,11 +90,9 @@ ALTER TABLE `Posts` ADD CONSTRAINT `Posts_fk1` FOREIGN KEY (`creatorID`) REFEREN
 
 ALTER TABLE `Posts` ADD CONSTRAINT `Posts_fk2` FOREIGN KEY (`creatorFormID`) REFERENCES `Forms`(`id`);
 
-ALTER TABLE `FormsInPosts` ADD CONSTRAINT `FormsInPosts_fk0` FOREIGN KEY (`formID`) REFERENCES `Forms`(`id`);
-
-ALTER TABLE `FormsInPosts` ADD CONSTRAINT `FormsInPosts_fk1` FOREIGN KEY (`postID`) REFERENCES `Posts`(`id`);
-
 ALTER TABLE `Forms` ADD CONSTRAINT `Forms_fk0` FOREIGN KEY (`formWriterID`) REFERENCES `Accounts`(`id`);
+
+ALTER TABLE `Forms` ADD CONSTRAINT `Forms_fk1` FOREIGN KEY (`postSubmittedIn`) REFERENCES `Posts`(`id`);
 
 ALTER TABLE `Options` ADD CONSTRAINT `Options_fk0` FOREIGN KEY (`questionID`) REFERENCES `QuestionAndAnswers`(`id`);
 
