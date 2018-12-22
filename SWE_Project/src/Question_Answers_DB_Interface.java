@@ -5,10 +5,12 @@ public class Question_Answers_DB_Interface {
 	private static String tableName= "questionandanswers";	
 	public static int addQuestion_Answers(Question_Answers question)
 	{
+		if(question == null)
+			return -1;
 		MySQLConnector.openConnection();
 		String q = "insert into "+tableName
 				+"(question, answer) values"
-				+ "("+question.getQuestion()+", '"+ question.getAnswer()+"' )";
+				+ "('"+question.getQuestion()+"', '"+ question.getAnswer()+"' )";
 		Boolean result = MySQLConnector.executeUpdate(q);
 		//load the id
 		int id=-1;
@@ -16,10 +18,23 @@ public class Question_Answers_DB_Interface {
 			id = MySQLConnector.getIdOfTheLastAddedIn(tableName);
 		if(id != -1)
 		{
-			ArrayList<Option> options = question.getOptions();
-			for(Option option: options)
-				Option_DB_Interface.addOption(option);
-
+			if(question.getMyForm() != null)
+			{
+				q = "INSERT INTO `questionsforforms`(`questionID`, `formID`) "
+						+ "VALUES ("+ id +" , "+ question.getMyForm().getId() + ")";
+				MySQLConnector.executeUpdate(q);
+				
+			}
+			if(question.getItemsUsesMe() != null)
+			{
+				for(Item i : question.getItemsUsesMe())
+				{
+					q = "INSERT INTO `questionsforitems`(`questionID`, `itemID`) "
+							+ "VALUES ("+id+" , " + i.getId() +" )";
+					MySQLConnector.executeUpdate(q);
+				}
+					
+			}
 		}
 		MySQLConnector.closeConnection();
 		return id;
@@ -163,11 +178,13 @@ public class Question_Answers_DB_Interface {
 			}
 		}
 	}
-	public static Boolean deleteQuestion(int id)
+	public static Boolean deleteQuestion(Question_Answers qu)
 	{
+		for(Option option: qu.getOptions())
+			Option_DB_Interface.deleteOption(option.getId());
 		MySQLConnector.openConnection();
 		String q = "delete from "+ tableName +" where "
-				+ "id = "+id;
+				+ "id = "+qu.getId();
 		Boolean result = MySQLConnector.executeUpdate(q);
 		MySQLConnector.closeConnection();
 		return result;

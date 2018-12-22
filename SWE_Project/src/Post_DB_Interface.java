@@ -4,6 +4,23 @@ public class Post_DB_Interface {
 	private static String dateFormat = "YYYY-MM-dd HH:mm:ss";
 	private static String tableName="posts";
 	
+	public static Boolean deletePost(Post p)
+	{
+		for(Form form: p.getSearchingForms())
+			Form_DB_Interface.deleteForm(form);
+		Form_DB_Interface.deleteForm(p.getCreatorForm());
+		
+		for(Answer_Message message : p.getAnswerMessages())
+		Answer_Message_DB_Interface.deleteAnswer_Message(message);
+		
+		
+		MySQLConnector.openConnection();
+		String q = "delete from "+ tableName +" where "
+				+ "id = "+p.getId();
+		Boolean result = MySQLConnector.executeUpdate(q);
+		MySQLConnector.closeConnection();
+		return result;
+	}
 	public static ArrayList<Post> getPostsWithItemWithId(int id)
 	{
 		MySQLConnector.openConnection();
@@ -31,6 +48,7 @@ public class Post_DB_Interface {
 					post.setCreator(Account_DB_Interface.getAccount(rs.getInt("creatorID")));
 					post.setCreatorForm(Form_DB_Interface.getFormById(rs.getInt("creatorFormID")));
 					posts.add(post);
+					//answer_messages
 				}				
 				MySQLConnector.closeConnection();
 				return posts;
@@ -69,6 +87,7 @@ public class Post_DB_Interface {
 					post.setCreator(Account_DB_Interface.getAccount(rs.getInt("creatorID")));
 					post.setCreatorForm(Form_DB_Interface.getFormById(rs.getInt("creatorFormID")));
 					posts.add(post);
+					//answermessages
 				}				
 				MySQLConnector.closeConnection();
 				return posts;
@@ -126,6 +145,7 @@ public class Post_DB_Interface {
 						);
 				post.setCreator(Account_DB_Interface.getAccount(rs.getInt("creatorID")));
 				post.setCreatorForm(Form_DB_Interface.getFormById(rs.getInt("creatorFormID")));
+				//answer messages
 				MySQLConnector.closeConnection();
 				return post;
 			}
@@ -139,8 +159,9 @@ public class Post_DB_Interface {
 	
 	public static int addPost(Post post)
 	{
+		if(post == null)
+			return -1;
 		MySQLConnector.openConnection();
-		post.getCreatorForm().setId(Form_DB_Interface.addForm(post.getCreatorForm())); 
 		String q = "insert into "+tableName
 				+"(`desc`, `dateAndTime`, `itemID`, `creatorID`, `creatorFormID`)  values"
 				+ "('"
@@ -155,10 +176,6 @@ public class Post_DB_Interface {
 		int id=-1;
 		if(result)
 			id = MySQLConnector.getIdOfTheLastAddedIn(tableName);
-		if(id != -1)
-		{
-			post.getCreatorForm().setId(Form_DB_Interface.addForm(post.getCreatorForm()));
-		}
 		MySQLConnector.closeConnection();
 		return id;
 	}

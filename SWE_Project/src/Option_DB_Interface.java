@@ -6,6 +6,8 @@ public class Option_DB_Interface {
 	
 	public static int addOption(Option option)
 	{
+		if(option == null || option.getForQuestion() == null || option.getOption() == null)
+			return -1;
 		MySQLConnector.openConnection();
 		String q = "insert into "+tableName
 				+"(questionID, option) values"
