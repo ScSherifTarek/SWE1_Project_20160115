@@ -1,13 +1,57 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package testmain;
+
+/**
+ *
+ * @author Owner
+ */
 import java.util.ArrayList;
 
 public class Answer_Message_DB_Interface {
 	
 	private static String tableName="answermessages";
 	
-	public static Answer_Message getMessageById(int id)
+	public static ArrayList<String>  getMessageById(int id)
 	{
-		return null;
+		
+	
+		
+ 	
+ 		MySQLConnector.openConnection();
+ 		String m = "select * from "+tableName +" where "
+ 				+ "id = " + id;
+ 		java.sql.ResultSet rs = MySQLConnector.executeQuery(m);
+ 		if(rs == null)
+ 		{	
+ 			MySQLConnector.closeConnection();
+ 			return null;
+ 		}
+ 		else
+ 		{
+ 			try
+ 			{
+ 				ArrayList<String> Messages= new ArrayList<>();
+ 				String message = null;
+ 				while(rs.next())  
+ 				{
+                                    message = rs.getString("option");
+ 					Messages.add(message);
+ 				}
+ 				MySQLConnector.closeConnection();
+ 				return Messages;
+ 			}
+ 			catch(Exception ex)
+ 			{
+ 				MySQLConnector.closeConnection();
+ 				return null;
+ 			}
+ 		}	 
 	}
+	
 	
 	public static int addAnswer_Message(Answer_Message m)
 	{
@@ -65,3 +109,4 @@ public class Answer_Message_DB_Interface {
 		}
 	}
 }
+
