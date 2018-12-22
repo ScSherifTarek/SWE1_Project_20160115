@@ -5,12 +5,13 @@ public class testMain {
 
 	public static void main(String[] args) {
 		
-		String option1 = "Fine";
-		String option2 = "Bad";
-		System.out.println(Option_DB_Interface.addOption(1, option1));
-		System.out.println(Option_DB_Interface.addOption(1, option2));
-		System.out.println(Option_DB_Interface.getOptionsFor(1));
-		
+//		System.out.println(Question_Answers_DB_Interface.getQuestionsForFormWithId(1));
+//		String option1 = "Fine";
+//		String option2 = "Bad";
+//		System.out.println(Option_DB_Interface.addOption(1, option1));
+//		System.out.println(Option_DB_Interface.addOption(1, option2));
+//		System.out.println(Option_DB_Interface.getOptionsFor(1));
+//		
 		// TODO Auto-generated method stub
 //		Account acc = Account_DB_Interface.getAccount(5);
 //		if(acc == null)

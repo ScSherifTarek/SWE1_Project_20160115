@@ -13,7 +13,7 @@ public class Account_DB_Interface {
 		//load the id
 		int id=-1;
 		if(result)
-			id = getId(acc.getEmail(), acc.getPassword());
+			id = MySQLConnector.getIdOfTheLastAddedIn(tableName);
 		MySQLConnector.closeConnection();
 		return id;
 	}

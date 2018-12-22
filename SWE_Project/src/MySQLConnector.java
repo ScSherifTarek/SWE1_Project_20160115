@@ -92,6 +92,37 @@ public class MySQLConnector {
 		}  
 	}
 	
+	/**
+	 * 
+	 * @param tableName the table we want to get from
+	 * @return the last added id
+	 */
+	public static int getIdOfTheLastAddedIn(String tableName)
+	{
+		MySQLConnector.openConnection();
+		String q = "SELECT id FROM "+tableName+" ORDER BY id DESC limit 1";
+		java.sql.ResultSet rs = MySQLConnector.executeQuery(q);
+		if(rs == null)
+		{		
+			MySQLConnector.closeConnection();
+			return -1;
+		}
+		else
+		{
+			try
+			{
+				rs.next();
+				int id = rs.getInt("id");
+				MySQLConnector.closeConnection();
+				return id;
+			}
+			catch(Exception ex)
+			{
+				MySQLConnector.closeConnection();
+				return -1;
+			}
+		}
+	}
 	
 	
 	/**

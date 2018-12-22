@@ -64,12 +64,16 @@ CREATE TABLE `Options` (
 
 CREATE TABLE `QuestionsForItems` (
 	`questionID` int NOT NULL,
-	`itemID` int NOT NULL
+	`itemID` int NOT NULL,
+	`id` int NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `QuestionsForForms` (
 	`questionID` int NOT NULL,
-	`formID` int NOT NULL
+	`formID` int NOT NULL,
+	`id` int NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `AnswerMessages` ADD CONSTRAINT `AnswerMessages_fk0` FOREIGN KEY (`senderID`) REFERENCES `Accounts`(`id`);
