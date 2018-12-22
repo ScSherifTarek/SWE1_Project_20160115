@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+
 public class Option_DB_Interface {
 	private static String tableName= "options";
 	
@@ -10,13 +11,25 @@ public class Option_DB_Interface {
 				+"(questionID, option) values"
 				+ "("+questionID+", '"+ option+"' )";
 		Boolean result = MySQLConnector.executeUpdate(q);
+		
 		//load the id
 		int id=-1;
 		if(result)
-			id = getId(questionID, option);
+			id = MySQLConnector.getIdOfTheLastAddedIn(tableName);
 		MySQLConnector.closeConnection();
 		return id;
 	}
+	
+	public static Boolean deleteOption(int id)
+	{
+		MySQLConnector.openConnection();
+		String q = "delete from "+ tableName +" where "
+				+ "id = "+id;
+		Boolean result = MySQLConnector.executeUpdate(q);
+		MySQLConnector.closeConnection();
+		return result;
+	}
+	
 	public static ArrayList<String> getOptionsFor(int questionID)
 	{
 		MySQLConnector.openConnection();
@@ -50,34 +63,5 @@ public class Option_DB_Interface {
 		}
 		
 	}
-	public static int getId(int questionID, String option)
-	{
-		MySQLConnector.openConnection();
-		String q = "select id from "+tableName+" where "
-				+ "questionID ="+questionID+" "
-				+ "and "
-				+ "option ='"+option+ "'"
-				+ " limit 1";
-		java.sql.ResultSet rs = MySQLConnector.executeQuery(q);
-		if(rs == null)
-		{		
-			MySQLConnector.closeConnection();
-			return -1;
-		}
-		else
-		{
-			try
-			{
-				rs.next();
-				int id = rs.getInt("id");
-				MySQLConnector.closeConnection();
-				return id;
-			}
-			catch(Exception ex)
-			{
-				MySQLConnector.closeConnection();
-				return -1;
-			}
-		}
-	}
+	
 }
