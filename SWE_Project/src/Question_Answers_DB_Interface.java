@@ -16,9 +16,9 @@ public class Question_Answers_DB_Interface {
 			id = MySQLConnector.getIdOfTheLastAddedIn(tableName);
 		if(id != -1)
 		{
-			ArrayList<String> options = question.getOptions();
-			for(String option:options)
-				Option_DB_Interface.addOption(id, option);
+			ArrayList<Option> options = question.getOptions();
+			for(Option option: options)
+				Option_DB_Interface.addOption(option);
 
 		}
 		MySQLConnector.closeConnection();
@@ -114,7 +114,9 @@ public class Question_Answers_DB_Interface {
 							rs.getString("answer"),
 							Option_DB_Interface.getOptionsFor(rs.getInt("id"))
 							);
+					
 					questions.add(qu);
+					
 				}
 				MySQLConnector.closeConnection();
 				return questions;
@@ -128,7 +130,39 @@ public class Question_Answers_DB_Interface {
 		
 	}
 	
-	
+	public static Question_Answers getQuestionAnswersWithId(int id)
+	{
+		MySQLConnector.openConnection();
+		String q = "select * from "+tableName+" where id ="+id+" limit 1";
+		java.sql.ResultSet rs = MySQLConnector.executeQuery(q);
+		if(rs == null)
+		{		
+			MySQLConnector.closeConnection();
+			return null;
+		}
+		else
+		{
+			try
+			{
+				rs.next();
+				Question_Answers qu= 
+						new Question_Answers(
+								rs.getInt("id"),
+								rs.getString("question"), 
+								rs.getString("answer"),
+								Option_DB_Interface.getOptionsFor(rs.getInt("id"))
+								);
+				
+				MySQLConnector.closeConnection();
+				return qu;
+			}
+			catch(Exception ex)
+			{
+				MySQLConnector.closeConnection();
+				return null;
+			}
+		}
+	}
 	public static Boolean deleteQuestion(int id)
 	{
 		MySQLConnector.openConnection();

@@ -30,6 +30,10 @@ ALTER TABLE `QuestionsForForms` DROP FOREIGN KEY `QuestionsForForms_fk0`;
 
 ALTER TABLE `QuestionsForForms` DROP FOREIGN KEY `QuestionsForForms_fk1`;
 
+ALTER TABLE `formsinposts` DROP FOREIGN KEY `formsinposts_fk0`;
+
+ALTER TABLE `formsinposts` DROP FOREIGN KEY `formsinposts_fk1`;
+
 DROP TABLE IF EXISTS `Accounts`;
 
 DROP TABLE IF EXISTS `AnswerMessages`;
@@ -49,4 +53,6 @@ DROP TABLE IF EXISTS `Options`;
 DROP TABLE IF EXISTS `QuestionsForItems`;
 
 DROP TABLE IF EXISTS `QuestionsForForms`;
+
+DROP TABLE IF EXISTS `formsinposts`;
 

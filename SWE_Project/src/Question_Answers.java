@@ -4,7 +4,7 @@ public class Question_Answers {
 	private int id=-1;
 	private String question;
 	private String answer;
-	private ArrayList<String> options;
+	private ArrayList<Option> options;
 	private Form myForm;
 	private ArrayList<Item> itemsUsesMe;
 	
@@ -16,20 +16,20 @@ public class Question_Answers {
 		this.setOptions(q.getOptions());
 		this.setAnswer(q.getAnswer());
 	}
-	public Question_Answers(int id, String question, String answer, ArrayList<String> options)
+	public Question_Answers(int id, String question, String answer, ArrayList<Option> options)
 	{
 		this.setId(id);
 		this.setQuestion(question);
 		this.setOptions(options);
 		this.setAnswer(answer);
 	}
-	public Question_Answers(int id, String question, ArrayList<String> options)
+	public Question_Answers(int id, String question, ArrayList<Option> options)
 	{
 		this.id = id;
 		this.question = question;
 		this.setOptions(options);
 	}
-	public Question_Answers(String question, ArrayList<String> options)
+	public Question_Answers(String question, ArrayList<Option> options)
 	{
 		this.question = question;
 		this.setOptions(options);
@@ -78,8 +78,8 @@ public class Question_Answers {
 			System.out.println("You should enter the options first");
 			return;
 		}
-		for(String option : options)
-			if(option.equals(answer))
+		for(Option option : options)
+			if(option.getOption().equals(answer))
 			{
 				this.answer = answer;
 				return;
@@ -90,25 +90,25 @@ public class Question_Answers {
 	/**
 	 * @return the options
 	 */
-	public ArrayList<String> getOptions() {
+	public ArrayList<Option> getOptions() {
 		return options;
 	}
 
 	/**
 	 * @param options the options to set
 	 */
-	public void setOptions(ArrayList<String> options) {
+	public void setOptions(ArrayList<Option> options) {
 		if(options == null)
 			return;	
 		this.options = new ArrayList<>();
-		for(String e : options)
+		for(Option e : options)
 			this.options.add(e);
 	}
 	/**
 	 * 
 	 * @param option the option to add
 	 */
-	public void addOptionToOptions(String option)
+	public void addOptionToOptions(Option option)
 	{
 		if(option == null)
 			return;
