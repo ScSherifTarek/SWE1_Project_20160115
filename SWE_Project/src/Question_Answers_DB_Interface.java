@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import com.mysql.jdbc.ResultSet;
+
 public class Question_Answers_DB_Interface {
 	
 	private static String tableName= "questionandanswers";	
@@ -12,15 +14,17 @@ public class Question_Answers_DB_Interface {
 				+"(question, answer) values"
 				+ "('"+question.getQuestion()+"', '"+ question.getAnswer()+"' )";
 		Boolean result = MySQLConnector.executeUpdate(q);
+
 		//load the id
 		int id=-1;
 		if(result)
 			id = MySQLConnector.getIdOfTheLastAddedIn(tableName);
 		if(id != -1)
 		{
+			MySQLConnector.openConnection();
 			if(question.getMyForm() != null)
 			{
-				q = "INSERT INTO `questionsforforms`(`questionID`, `formID`) "
+				q = "INSERT INTO questionsforforms(questionID, formID) "
 						+ "VALUES ("+ id +" , "+ question.getMyForm().getId() + ")";
 				MySQLConnector.executeUpdate(q);
 				
@@ -29,7 +33,20 @@ public class Question_Answers_DB_Interface {
 			{
 				for(Item i : question.getItemsUsesMe())
 				{
-					q = "INSERT INTO `questionsforitems`(`questionID`, `itemID`) "
+					q = "select * from questionsforitems where "
+							+ "questionID =" + id +" "
+							+ "And"
+							+ "itemID = "+i.getId()+"";
+					try
+					{
+						java.sql.ResultSet haves = MySQLConnector.executeQuery(q);
+						haves.next();
+						continue;
+					}catch(Exception ex)
+					{
+					}
+					
+					q = "INSERT INTO questionsforitems(questionID, itemID) "
 							+ "VALUES ("+id+" , " + i.getId() +" )";
 					MySQLConnector.executeUpdate(q);
 				}
@@ -94,19 +111,19 @@ public class Question_Answers_DB_Interface {
 	public static ArrayList<Question_Answers> getQuestionsForItemWithId(int id)
 	{
 		String q = "SELECT "
-					+ "questionandanswers.id, "
-					+ "questionandanswers.question, "
-					+ "questionandanswers.answer "
+					+ " questionandanswers.id, "
+					+ " questionandanswers.question, "
+					+ " questionandanswers.answer "
 				+ "FROM "
-					+ "`questionsforitems` "
-					+ "JOIN "
-					+ "items "
-					+ "JOIN "
-					+ "questionandanswers "
+					+ " questionsforitems "
+					+ " JOIN "
+					+ " items "
+					+ " JOIN "
+					+ " questionandanswers "
 				+ "ON "
-					+ "questionsforitems.formID = items.id "
-					+ "AND "
-					+ "questionsforitems.questionID = questionandanswers.id";
+					+ " questionsforitems.itemID = items.id "
+					+ " AND "
+					+ " questionsforitems.questionID = questionandanswers.id";
 		MySQLConnector.openConnection();
 		java.sql.ResultSet rs = MySQLConnector.executeQuery(q);
 		if(rs == null)
@@ -129,9 +146,7 @@ public class Question_Answers_DB_Interface {
 							rs.getString("answer"),
 							Option_DB_Interface.getOptionsFor(rs.getInt("id"))
 							);
-					
 					questions.add(qu);
-					
 				}
 				MySQLConnector.closeConnection();
 				return questions;

@@ -88,27 +88,32 @@ public class Form_DB_Interface {
 	
 	public static int addForm(Form form)
 	{
-		if(form == null || form.getCreator() == null || form.getSubmittedIn() == null)
+		if(form == null || form.getCreator() == null )
 			return -1;
 		MySQLConnector.openConnection();
-		String q = "insert into "+tableName
-				+"( `formWriterID`, `postSubmittedIn`)  values"
-				+ "('"+ form.getCreator().getId()+"' , '"+ form.getSubmittedIn().getId()+"')";
+		String q="";
+		if(form.getSubmittedIn() != null)
+			q = "insert into "+tableName +" "
+				+"( formWriterID,  postSubmittedIn)  values"
+				+ "("+ form.getCreator().getId()+" , "+ form.getSubmittedIn().getId()+")";
+
+		if(form.getSubmittedIn() == null)
+			q = "insert into "+tableName +" "
+					+"( formWriterID)  values"
+					+ "("+ form.getCreator().getId()+")";
+
 		Boolean result = MySQLConnector.executeUpdate(q);
-		
+		System.out.println(result);
 		//load the id
 		int id=-1;
 		if(result)
 			id = MySQLConnector.getIdOfTheLastAddedIn(tableName);
 		if(id != -1)
 		{
-			
-			ArrayList<Question_Answers> questions = form.getQuestions();
-			for(Question_Answers question :questions)
-				question.setId(Question_Answers_DB_Interface.addQuestion_Answers(question));
+			MySQLConnector.openConnection();
 			if(form.getSubmittedIn() != null )
 			{
-				q = "INSERT INTO `formsinposts`(`formID`, `postID`) "
+				q = "INSERT INTO formsinposts (formID , postID ) "
 						+ "VALUES "
 						+ "("
 						+ id + ","

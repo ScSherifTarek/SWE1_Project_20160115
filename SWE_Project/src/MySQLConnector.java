@@ -66,6 +66,7 @@ public class MySQLConnector {
 		}
 		catch(Exception ex)
 		{
+			System.out.println(ex);
 			return false;
 		}  
 	}
@@ -88,6 +89,7 @@ public class MySQLConnector {
 		}
 		catch(Exception e)
 		{
+			System.out.println(e);
 			return null;
 		}  
 	}

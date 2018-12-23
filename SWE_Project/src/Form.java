@@ -84,6 +84,7 @@ public class Form {
 	public void setSubmittedIn(Post submittedIn) {
 		this.submittedIn = new  Post(submittedIn);
 	}
+	
 	public String toString()
 	{
 		String result="\n";
