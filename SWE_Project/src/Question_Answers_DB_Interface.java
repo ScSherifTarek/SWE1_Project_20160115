@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import com.mysql.jdbc.ResultSet;
+
 public class Question_Answers_DB_Interface {
 	
 	private static String tableName= "questionandanswers";	
@@ -29,6 +31,20 @@ public class Question_Answers_DB_Interface {
 			{
 				for(Item i : question.getItemsUsesMe())
 				{
+					q = "select * from questionsforitems where "
+							+ "questionID =" + id +""
+							+ "And"
+							+ "itemID = "+i.getId()+"";
+					try
+					{
+						java.sql.ResultSet haves = MySQLConnector.executeQuery(q);
+						haves.next();
+						continue;
+					}catch(Exception ex)
+					{
+					}
+					
+					
 					q = "INSERT INTO `questionsforitems`(`questionID`, `itemID`) "
 							+ "VALUES ("+id+" , " + i.getId() +" )";
 					MySQLConnector.executeUpdate(q);
