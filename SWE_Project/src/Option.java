@@ -49,4 +49,9 @@ public class Option {
 	public void setForQuestion(Question_Answers forQuestion) {
 		this.forQuestion = new Question_Answers(forQuestion);
 	}
+	
+	public String toString()
+	{
+		return "\n"+this.getId()+" :"+this.getOption()+"\n";
+	}
 }

@@ -44,7 +44,7 @@ CREATE TABLE `Posts` (
 CREATE TABLE `Forms` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`formWriterID` int NOT NULL,
-	`postSubmittedIn` int NOT NULL,
+	`postSubmittedIn` int,
 	PRIMARY KEY (`id`)
 );
 

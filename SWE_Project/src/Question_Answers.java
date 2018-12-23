@@ -91,7 +91,7 @@ public class Question_Answers {
 				this.answer = answer;
 				return;
 			}
-		System.out.println(answer+" Not from the options");
+//		System.out.println(answer+" Not from the options");
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class Question_Answers {
 	 * 
 	 * @param item the item to add
 	 */
-	public void addQuestionToQuestionsForThisItem(Item item)
+	public void addItemToItemsUsesMe(Item item)
 	{
 		if(item == null)
 			return;

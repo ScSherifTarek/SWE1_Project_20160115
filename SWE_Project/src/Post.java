@@ -208,7 +208,7 @@ public class Post {
 	{
 		String result="\n";
 		
-		result +="post id : "+this.id+"\n";
+//		result +="post id : "+this.id+"\n";
 		if(this.creator != null)
 			if(this.creator.getName()!=null)
 				result +="creator name: " + this.creator.getName();
@@ -220,23 +220,25 @@ public class Post {
 			if(this.lostItem.getType() != null)
 				result +="type : "+this.lostItem.getType()+", ";
 			if(this.lostItem.getBrand() != null)
-				result +="brand : "+this.lostItem.getBrand()+"\n";
+				result +="brand : "+this.lostItem.getBrand()+"";
 		}
 		
-		result +="posted in : "+this.datetime+"\n";
+		result +="\ndescription :" + this.getDescription();
+		result +="\nposted in : "+this.datetime+"\n";
 		
-		if(this.creatorForm != null)
-		{
-			result +="the creator form data is as follow:\n";
-			result +=this.creatorForm;
-		}
 		
-		if(this.searchingForms != null)
-		{
-			result +="the answers form:";
-			for(Form f : this.searchingForms)
-				result += f + "\n";
-		}
+//		if(this.creatorForm != null)
+//		{
+//			result +="the creator form data is as follow:\n";
+//			result +=this.creatorForm;
+//		}
+		
+//		if(this.searchingForms != null)
+//		{
+//			result +="the answers form:";
+//			for(Form f : this.searchingForms)
+//				result += f + "\n";
+//		}
 		
 		return result;
 	}
