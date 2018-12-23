@@ -23,6 +23,13 @@ public class Question_Answers {
 		this.setOptions(options);
 		this.setAnswer(answer);
 	}
+	public Question_Answers(String question, String answer, ArrayList<Option> options)
+	{
+		this.setId(id);
+		this.setQuestion(question);
+		this.setOptions(options);
+		this.setAnswer(answer);
+	}
 	public Question_Answers(int id, String question, ArrayList<Option> options)
 	{
 		this.id = id;

@@ -14,6 +14,8 @@ public class Item_DB_Interface {
 	}
 	public static int addItem(Item item)
 	{
+		if(item == null)
+			return -1;
 		MySQLConnector.openConnection();
 		String q = "insert into "+tableName
 				+"(`category`, `type`, `brand`)  values"
@@ -23,12 +25,6 @@ public class Item_DB_Interface {
 		int id=-1;
 		if(result)
 			id = MySQLConnector.getIdOfTheLastAddedIn(tableName);
-		if(id != -1)
-		{
-			ArrayList<Question_Answers> questions = item.getQuestionsForThisItem();
-			for(Question_Answers question :questions)
-				Question_Answers_DB_Interface.addQuestion_Answers(question);
-		}
 		MySQLConnector.closeConnection();
 		return id;
 	}

@@ -37,14 +37,23 @@ public class Answer_Message implements Message {
 	@Override
 	public String getBody() {
 		String result="\n";
-		result += "Some One Submitted in the post with this description:\n";
-		result += postSubmittedInIt.getDescription() +"\n";
-		result += "which posted by you in : " + postSubmittedInIt.getDatetime() + "\n";
-		result += "Please take an action with him :D\n";
-		result += "Here's the questions with his answers check it then do the right you see (e3mel elsa7 XD)\n";
-		ArrayList<Question_Answers> qAs = formSubmitted.getQuestions();
-		for(Question_Answers q : qAs)
-			result += q + "\n";
+		
+		result += "Some One Submitted in the post ";
+		if(postSubmittedInIt!= null)
+		{
+			result += " with this description:\n";
+			result += postSubmittedInIt.getDescription() +"\n";
+			result += "\nwhich posted by you in : " + postSubmittedInIt.getDatetime();
+		}
+		result += "\nPlease take an action with him :D";
+		if(formSubmitted != null)
+		{
+			result += "\nHere's the questions with his answers check it then do the right you see (e3mel elsa7 XD)\n";
+			ArrayList<Question_Answers> qAs = formSubmitted.getQuestions();
+			for(Question_Answers q : qAs)
+				result += q + "\n";
+		}
+			
 		return result;
 	}
 

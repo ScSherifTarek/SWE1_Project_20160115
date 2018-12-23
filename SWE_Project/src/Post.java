@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Post {
 	private int id=-1;
-	private String description;
+	private String description=null;
 	private String datetime;
 	private Item lostItem;
 	private Account creator;

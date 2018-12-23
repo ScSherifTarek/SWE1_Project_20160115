@@ -1,7 +1,7 @@
 
 public class Contact_Message implements Message {
 
-	int id = -1;
+	private int id = -1;
 	private Account sender;
 	private Account receiver;
 	
@@ -27,11 +27,15 @@ public class Contact_Message implements Message {
 	@Override
 	public String getBody() {
 		String result="\n";
-		result += sender.getName();
-		result += " has checked your answers, congratulations we have found for you your item :D\n";
-		result += "please contact him by:\n";
-		result += "email: " + sender.getEmail();
-		result += "phone: " + sender.getPhoneNumber();
+		if(sender != null)
+		{
+			result += sender.getName();
+			result += " has checked your answers, congratulations we have found for you your item :D\n";
+			result += "please contact him by:\n";
+			result += "email: " + sender.getEmail();
+			result += "phone: " + sender.getPhoneNumber();
+
+		}
 		result +="\n";
 		return result;
 	}
@@ -62,6 +66,20 @@ public class Contact_Message implements Message {
 	 */
 	public void setReceiver(Account receiver) {
 		this.receiver = new Account(receiver);
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

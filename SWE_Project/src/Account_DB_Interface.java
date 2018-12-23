@@ -5,6 +5,8 @@ public class Account_DB_Interface {
 	
 	public static int addAccount(Account acc)
 	{
+		if(acc == null)
+			return -1;
 		MySQLConnector.openConnection();
 		String q = "insert into "+tableName+"(name, password, email, phone) values ('"
 				+ acc.getName() +"', '"+acc.getPassword()+"', '"+acc.getEmail()+"', '"+acc.getPhoneNumber() + "')";
@@ -70,6 +72,9 @@ public class Account_DB_Interface {
 							rs.getString("email"), 
 							rs.getString("phone")
 							);
+					acc.setCreatedPosts(Post_DB_Interface.getPostsCreatedByAccountWithId(rs.getInt("id")));
+					acc.setMessages(Message_DB_Interface.getMessagesForAccountWithId(rs.getInt("id")));
+					acc.setSubmittedForms(Form_DB_Interface.getFormsCreatedByAccountWithId(rs.getInt("id")));
 					accounts.add(acc);
 				}
 				MySQLConnector.closeConnection();
@@ -108,7 +113,9 @@ public class Account_DB_Interface {
 						rs.getString("email"), 
 						rs.getString("phone")
 						);
-				
+				acc.setCreatedPosts(Post_DB_Interface.getPostsCreatedByAccountWithId(rs.getInt("id")));
+				acc.setMessages(Message_DB_Interface.getMessagesForAccountWithId(rs.getInt("id")));
+				acc.setSubmittedForms(Form_DB_Interface.getFormsCreatedByAccountWithId(rs.getInt("id")));
 				MySQLConnector.closeConnection();
 				return acc;
 			}
@@ -148,7 +155,9 @@ public class Account_DB_Interface {
 						rs.getString("email"), 
 						rs.getString("phone")
 						);
-				
+				acc.setCreatedPosts(Post_DB_Interface.getPostsCreatedByAccountWithId(rs.getInt("id")));
+				acc.setMessages(Message_DB_Interface.getMessagesForAccountWithId(rs.getInt("id")));
+				acc.setSubmittedForms(Form_DB_Interface.getFormsCreatedByAccountWithId(rs.getInt("id")));
 				MySQLConnector.closeConnection();
 				return acc;
 			}

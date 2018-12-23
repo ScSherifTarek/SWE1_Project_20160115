@@ -5,6 +5,52 @@ public class Form_DB_Interface {
 	private static String tableName= "forms";
 
 	
+	public static Boolean deleteForm(Form form)
+	{
+		
+		for(Question_Answers qu: form.getQuestions())
+			Question_Answers_DB_Interface.deleteQuestion(qu);
+		MySQLConnector.openConnection();
+		String q = "delete from "+ tableName +" where "
+				+ "id = "+form.getId();
+		Boolean result = MySQLConnector.executeUpdate(q);
+		MySQLConnector.closeConnection();
+		return result;
+	}
+	public static ArrayList<Form> getFormsCreatedByAccountWithId(int id)
+	{
+		MySQLConnector.openConnection();
+		String q = "select * from "+tableName+" where formWriterID ="+id+"";
+		java.sql.ResultSet rs = MySQLConnector.executeQuery(q);
+		if(rs == null)
+		{		
+			MySQLConnector.closeConnection();
+			return null;
+		}
+		else
+		{
+			try
+			{
+				ArrayList<Form> forms = new ArrayList<>();
+				Form form = null;
+				while(rs.next())
+				{
+					form = new Form(rs.getInt("id"));
+					form.setQuestions(Question_Answers_DB_Interface.getQuestionsForFormWithId(rs.getInt("id")));
+					form.setCreator(Account_DB_Interface.getAccount(rs.getInt("formWriterID")));
+					form.setSubmittedIn(Post_DB_Interface.getPostById(rs.getInt("postSubmittedIn")));
+					forms.add(form);
+				}				
+				MySQLConnector.closeConnection();
+				return forms;
+			}
+			catch(Exception ex)
+			{
+				MySQLConnector.closeConnection();
+				return null;
+			}
+		}
+	}
 	public static ArrayList<Form> getFormsForPostWithId(int id)
 	{
 		MySQLConnector.openConnection();
@@ -26,7 +72,7 @@ public class Form_DB_Interface {
 					form = new Form(rs.getInt("id"));
 					form.setQuestions(Question_Answers_DB_Interface.getQuestionsForFormWithId(rs.getInt("id")));
 					form.setCreator(Account_DB_Interface.getAccount(rs.getInt("formWriterID")));
-//					form.setSubmittedIn(Post_DB_Interface.);
+					form.setSubmittedIn(Post_DB_Interface.getPostById(rs.getInt("postSubmittedIn")));
 					forms.add(form);
 				}				
 				MySQLConnector.closeConnection();
@@ -42,6 +88,8 @@ public class Form_DB_Interface {
 	
 	public static int addForm(Form form)
 	{
+		if(form == null || form.getCreator() == null || form.getSubmittedIn() == null)
+			return -1;
 		MySQLConnector.openConnection();
 		String q = "insert into "+tableName
 				+"( `formWriterID`, `postSubmittedIn`)  values"
@@ -92,7 +140,7 @@ public class Form_DB_Interface {
 				Form form = new Form(rs.getInt("id"));
 				form.setQuestions(Question_Answers_DB_Interface.getQuestionsForFormWithId(rs.getInt("id")));
 				form.setCreator(Account_DB_Interface.getAccount(rs.getInt("formWriterID")));
-				//post
+				form.setSubmittedIn(Post_DB_Interface.getPostById(rs.getInt("postSubmittedIn")));
 				
 				MySQLConnector.closeConnection();
 				return form;
