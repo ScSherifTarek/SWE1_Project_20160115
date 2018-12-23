@@ -102,10 +102,6 @@ public class Form_DB_Interface {
 			id = MySQLConnector.getIdOfTheLastAddedIn(tableName);
 		if(id != -1)
 		{
-			
-			ArrayList<Question_Answers> questions = form.getQuestions();
-			for(Question_Answers question :questions)
-				question.setId(Question_Answers_DB_Interface.addQuestion_Answers(question));
 			if(form.getSubmittedIn() != null )
 			{
 				q = "INSERT INTO `formsinposts`(`formID`, `postID`) "
